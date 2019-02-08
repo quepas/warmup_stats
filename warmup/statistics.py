@@ -44,7 +44,8 @@ import traceback
 LOW_IQR_BOUND = 5.0
 HIGH_IQR_BOUND = 95.0
 
-BOOTSTRAPPER = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'warmup', 'bootstrapper.py')
+BOOTSTRAPPER = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))), 'warmup', 'bootstrapper.py')
 
 
 def median_iqr(seq):
@@ -62,10 +63,10 @@ def bootstrap_runner(marshalled_data):
         pipe.stdin.write(marshalled_data + '\n')
         pipe.stdin.flush()
         output = pipe.stdout.readline().strip()
-        mean_str, ci_str =  output.split(',')
+        mean_str, ci_str = output.split(',')
         mean, ci = float(mean_str), float(ci_str)
         return mean, ci
     except:
-        print 'Bootstrapper script failed:'
+        print('Bootstrapper script failed:')
         traceback.print_exc()
         return None, None
