@@ -210,4 +210,4 @@ def write_krun_results_file(results, filename):
     """Write a Krun results file to disk."""
 
     with bz2.BZ2File(filename, 'wb') as file_:
-        file_.write(json.dumps(results, indent=4))
+        file_.write(json.dumps(results, indent=4).encode())
