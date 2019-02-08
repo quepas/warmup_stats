@@ -313,7 +313,7 @@ def main(is_interactive, data_dcts, plot_titles, window_size, outfile,
                 if data is None:
                     return None
                 ret = list()
-                for i in xrange(len(page)):
+                for i in range(len(page)):
                     if page[i]:
                         try:
                             ret.append(data[i])
@@ -372,7 +372,7 @@ class ProcessExecChart(object):
         self.title = title
         self.window_size = window_size
         self.x_bounds = x_bounds
-        self.iterations = numpy.array(xrange(x_bounds[0], x_bounds[1]))
+        self.iterations = numpy.array(range(x_bounds[0], x_bounds[1]))
         self.y_range = y_range
         self.y_range_zoom = y_range_zoom
         if outliers:
@@ -600,7 +600,7 @@ class ProcessExecChart(object):
                           self.last_segment_mean + self.delta)
         if len(self.changepoints) > 0:
             # Plot earlier, equivalent segments.
-            for index in xrange(len(self.changepoint_means) - 2, -1, -1):
+            for index in range(len(self.changepoint_means) - 2, -1, -1):
                 current_segment_mean = self.changepoint_means[index]
                 current_segment_var = self.changepoint_vars[index]
                 if (current_segment_mean + current_segment_var >= lower_bound and
@@ -639,13 +639,13 @@ class ProcessExecChart(object):
             lines = LineCollection(self.segment_means, color=CHANGEPOINT_LINE_COLOR,
                                    zorder=ZORDER_CHANGEPOINTS, linestyle=CHANGEPOINT_LINE_STYLE,
                                    linewidths=[CHANGEPOINT_LINE_WIDTH
-                                   for _ in xrange(len(self.segment_means))])
+                                   for _ in range(len(self.segment_means))])
             axis.add_collection(lines)
 
     def plot_cycles_data(self):
         """Add core cycles data on another set of charts."""
         self.cycles_axes = [None] * len(self.cycles_data)
-        for core in xrange(len(self.cycles_data)):
+        for core in range(len(self.cycles_data)):
             self.cycles_axes[core] = pyplot.subplot(self.inner_grid[self.row, 0],
                                                     sharex=self.wallclock_axis)
             self.cycles_axes[core].plot(self.iterations, self.cycles_data[core],
@@ -703,7 +703,7 @@ class ProcessExecChart(object):
         # to account for the x and y tick labels which matplotlib does not
         # include in fig.add_axes.
         inset_collides = False
-        left_offsets = [x / 10.0 for x in xrange(6)] * 2
+        left_offsets = [x / 10.0 for x in range(6)] * 2
         bottom_values = (([1.0 - INSET_DEFAULT_HEIGHT - INSET_PADDING - INSET_TICK_SPACE] * (len(left_offsets) / 2))
                          + ([INSET_PADDING * 2 + INSET_TICK_SPACE] * (len(left_offsets) / 2)))
         best_distance = -1.0
@@ -832,7 +832,7 @@ def draw_page(is_interactive, executions, cycles_executions,
     if not zoom:  # User requested no zoom plot.
         y_range_zoom = [(None, None)] * len(executions)
     else:
-        for index in xrange(len(executions)):
+        for index in range(len(executions)):
             if window_size > 0:
                 first_n = window_size
             else:
@@ -857,7 +857,7 @@ def draw_page(is_interactive, executions, cycles_executions,
             break
         for execution in instr_executions:
             if execution is None:
-                for index in xrange(len(instr_data_by_instrument)):
+                for index in range(len(instr_data_by_instrument)):
                     instr_data_by_instrument[index].append(None)
             else:
                 for index, instrument_data in enumerate(execution):
@@ -1064,7 +1064,7 @@ def get_data_dictionaries(json_files, benchmarks=[], wallclock_only=False,
                             data_dictionary['instr_data'][key][machine] =  \
                                 get_instr_data(
                                     key, machine, instr_dir,
-                                    xrange(len(data['wallclock_times'][key])))
+                                    range(len(data['wallclock_times'][key])))
                         else:
                             data_dictionary['instr_data'][key][machine] = None
                     if changepoints:
@@ -1106,7 +1106,7 @@ def get_data_dictionaries(json_files, benchmarks=[], wallclock_only=False,
                 except KeyError:
                     pass  # no data for this
                 else:
-                    for p_exec in xrange(num_p_execs):
+                    for p_exec in range(num_p_execs):
                         if data_has_changepoints:
                             classification = ' (%s)' % \
                                 data['classifications'][key][p_exec]

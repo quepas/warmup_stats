@@ -85,10 +85,10 @@ def bootstrap_steady_perf(steady_segments_all_pexecs, confidence_level=CONFIDENC
     means = list()  # Final list of BOOTSTRAP_ITERATIONS resamples.
 
     for segments in steady_segments_all_pexecs:  # Iterate over pexecs.
-        for _ in xrange(n_resamples):
+        for _ in range(n_resamples):
             sample = list()
             for seg in segments:
-                sample.extend([random.choice(seg) for _ in xrange(len(seg))])
+                sample.extend([random.choice(seg) for _ in range(len(seg))])
             means.append(_mean(sample))
     assert len(means) >= BOOTSTRAP_ITERATIONS
 

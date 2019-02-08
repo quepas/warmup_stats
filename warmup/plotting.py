@@ -221,11 +221,11 @@ def compute_grid_offsets(d_min, d_max, num, with_max=False):
     if with_max:  # x-ticks for wallclock times, must include max value.
         rng = float(d_max) - d_min
         freq =  rng / num
-        return [d_min + i * round(freq) for i in xrange(num)] + [d_max - 1]
+        return [d_min + i * round(freq) for i in range(num)] + [d_max - 1]
     else:
         rng = float(d_max) - d_min
         freq =  rng / num
-        return [d_min + i * freq for i in xrange(num + 1)]
+        return [d_min + i * freq for i in range(num + 1)]
 
 
 def style_axis(axis, major_xticks, minor_xticks, major_yticks, minor_yticks, tick_fontsize):

@@ -58,7 +58,7 @@ _VARIANTS = {'default-python': 'Python',
              'default-lua': 'Lua'}
 
 
-_BLANK_BENCHMARK = { 'wallclock_times': dict(), # Measurement data.
+_BLANK_BENCHMARK = {'wallclock_times': dict(),  # Measurement data.
                     'core_cycle_counts': dict(), 'aperf_counts': dict(),
                     'mperf_counts': dict(), 'audit': dict(), 'config': '',
                     'reboots': 0, 'starting_temperatures': list(),
@@ -129,8 +129,8 @@ def pretty_print_variant(language):
 
 
 def create_minimal_blank_results(audit):
-    return {'wallclock_times':dict(), 'all_outliers':dict(),
-            'common_outliers':dict(), 'unique_outliers':dict(), 'audit':audit}
+    return {'wallclock_times': dict(), 'all_outliers': dict(),
+            'common_outliers': dict(), 'unique_outliers': dict(), 'audit': audit}
 
 
 def copy_results(key, p_execs, from_results, to_results):
@@ -145,10 +145,14 @@ def copy_results(key, p_execs, from_results, to_results):
     to_results['unique_outliers'][key] = list()
     to_results['common_outliers'][key] = list()
     for p_exec in p_execs:
-        to_results['wallclock_times'][key].append(from_results['wallclock_times'][key][p_exec])
-        to_results['all_outliers'][key].append(from_results['all_outliers'][key][p_exec])
-        to_results['unique_outliers'][key].append(from_results['unique_outliers'][key][p_exec])
-        to_results['common_outliers'][key].append(from_results['common_outliers'][key][p_exec])
+        to_results['wallclock_times'][key].append(
+            from_results['wallclock_times'][key][p_exec])
+        to_results['all_outliers'][key].append(
+            from_results['all_outliers'][key][p_exec])
+        to_results['unique_outliers'][key].append(
+            from_results['unique_outliers'][key][p_exec])
+        to_results['common_outliers'][key].append(
+            from_results['common_outliers'][key][p_exec])
 
 
 def parse_krun_file_with_changepoints(json_files):
@@ -180,14 +184,14 @@ def parse_krun_file_with_changepoints(json_files):
             classifier = data['classifier']
         else:
             assert classifier == data['classifier'], \
-                   ('Cannot summarise categories generated with different '
+                ('Cannot summarise categories generated with different '
                     'command-line options for steady-state-expected '
                     'or delta. Please re-run the mark_changepoints_in_json script.')
         if window_size is None:
             window_size = data['window_size']
         else:
             assert window_size == data['window_size'], \
-                   ('Cannot summarise categories generated with different window-size '
+                ('Cannot summarise categories generated with different window-size '
                     'options. Please re-run the mark_outliers_in_json script.')
     return classifier, data_dictionary
 
@@ -197,7 +201,7 @@ def read_krun_results_file(results_file):
     """
     results = None
     with bz2.BZ2File(results_file, 'rb') as file_:
-        results = json.loads(file_.read())
+        results = json.loads(file_.read().decode('utf-8'))
         return results
     return None
 

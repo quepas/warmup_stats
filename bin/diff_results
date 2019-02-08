@@ -312,7 +312,7 @@ def diff(before_file, after_file, summary_filename, diff_vms=[]):
             continue
         # Classifications are available, whether or not summary statistics can be generated.
         trunc_cat = [summary[AFTER]['machines'][machine][vm][bench]['process_executons'][p]['classification'] \
-                     for p in xrange(len(summary[AFTER]['machines'][machine][vm][bench]['process_executons']))]
+                     for p in range(len(summary[AFTER]['machines'][machine][vm][bench]['process_executons']))]
         trunc_counts = [trunc_cat.count(category) for category in CATEGORIES]
         after_class_cis = numpy.array(MCI.multinomialCI(rpy2.robjects.FloatVector(trunc_counts), ALPHA))
         sample = summary[AFTER]['machines'][machine][vm][bench]
@@ -480,10 +480,10 @@ def write_latex_table(machine, all_benchs, summary, diff, skipped, tex_file, num
     # decide how to lay out the splits
     num_vms_rounded = int(math.ceil(num_vms / float(num_splits)) * num_splits)
     vms_per_split = int(num_vms_rounded / float(num_splits))
-    splits = [[] for x in xrange(num_splits)]
+    splits = [[] for x in range(num_splits)]
     vm_num = 0
     split_idx = 0
-    for vm_idx in xrange(num_vms_rounded):
+    for vm_idx in range(num_vms_rounded):
         if vm_idx < len(all_vms):
             vm = all_vms[vm_idx]
         else:

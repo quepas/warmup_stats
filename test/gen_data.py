@@ -64,7 +64,7 @@ def create_random_results():
                'wallclock_times': {KEY: [[]]},
                'core_cycle_counts': {KEY: [[]]},
                }
-    for _ in xrange(ITERS):
+    for _ in range(ITERS):
         results['wallclock_times'][KEY][0].append(random.random())
     return results
 

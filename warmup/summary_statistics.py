@@ -108,7 +108,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
             segments_for_bootstrap_all_pexecs = list()  # Steady state segments for all pexecs.
             # Lists of changepoints, outliers and segment means for each process execution.
             changepoints, outliers, segments = list(), list(), list()
-            for p_exec in xrange(n_pexecs):
+            for p_exec in range(n_pexecs):
                 segments_for_bootstrap_this_pexec = list()  # Steady state segments for this pexec.
                 changepoints.append(data_dictionaries[machine]['changepoints'][key][p_exec])
                 segments.append(data_dictionaries[machine]['changepoint_means'][key][p_exec])
@@ -128,7 +128,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
                 else:
                     start = 0  # No changepoints in this pexec.
                 end = len(data_dictionaries[machine]['wallclock_times'][key][p_exec])
-                for segment_index in xrange(start, end):
+                for segment_index in range(start, end):
                     if segment_index in data_dictionaries[machine]['all_outliers'][key][p_exec]:
                         continue
                     segment_data.append(data_dictionaries[machine]['wallclock_times'][key][p_exec][segment_index])
@@ -142,7 +142,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
                 upper_bound = max(last_segment_mean + last_segment_var, last_segment_mean + delta)
                 # This for loop deals with segments that are equivalent to the
                 # final, steady state segment.
-                for index in xrange(len(data_dictionaries[machine]['changepoint_means'][key][p_exec]) - 2, -1, -1):
+                for index in range(len(data_dictionaries[machine]['changepoint_means'][key][p_exec]) - 2, -1, -1):
                     current_segment_mean = data_dictionaries[machine]['changepoint_means'][key][p_exec][index]
                     current_segment_var = data_dictionaries[machine]['changepoint_vars'][key][p_exec][index]
                     if (current_segment_mean + current_segment_var >= lower_bound and
@@ -155,7 +155,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
                         else:
                             start = data_dictionaries[machine]['changepoints'][key][p_exec][index - 1] + 1
                             end = data_dictionaries[machine]['changepoints'][key][p_exec][index] + 1
-                        for segment_index in xrange(start, end):
+                        for segment_index in range(start, end):
                             if segment_index in data_dictionaries[machine]['all_outliers'][key][p_exec]:
                                 continue
                             segment_data.append(data_dictionaries[machine]['wallclock_times'][key][p_exec][segment_index])
@@ -176,7 +176,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
                     steady_iter = data_dictionaries[machine]['changepoints'][key][p_exec][first_steady_segment - 1]
                     steady_iters.append(steady_iter + 1)
                     to_steady = 0.0
-                    for index in xrange(steady_iter):
+                    for index in range(steady_iter):
                         to_steady += data_dictionaries[machine]['wallclock_times'][key][p_exec][index]
                     time_to_steadys.append(to_steady)
                 else:  # Flat execution, with no changepoints.
@@ -235,7 +235,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
             current_benchmark['steady_state_time_list'] = steady_state_means
 
             pexecs = list()  # This is needed for JSON output.
-            for index in xrange(n_pexecs):
+            for index in range(n_pexecs):
                 pexecs.append({'index':index, 'classification':categories[index],
                               'outliers':outliers[index], 'changepoints':changepoints[index],
                               'segment_means':segments[index]})

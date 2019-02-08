@@ -78,6 +78,7 @@ class VMInstrumentParser(object):
         """
         return
 
+
 class HotSpotInstrumentParser(VMInstrumentParser):
     """Parser for Oracle Hotspot instrumentation data.
     Data is in JSON format, and of the form:
@@ -103,10 +104,10 @@ class HotSpotInstrumentParser(VMInstrumentParser):
             return None
         raw_events = self.instr_data['raw_vm_events']
         iterations = len(raw_events)
-        jit_cumulative_times = [raw_events[i][1] for i in xrange(iterations)]
+        jit_cumulative_times = [raw_events[i][1] for i in range(iterations)]
         gc_cumulative_times = list()
         # Sum GC times over all collectors that ran in each iteration.
-        for iteration in xrange(iterations):
+        for iteration in range(iterations):
             gc_iteration = 0
             for collector in raw_events[iteration][2]:
                 gc_iteration += collector[-1]
@@ -117,10 +118,12 @@ class HotSpotInstrumentParser(VMInstrumentParser):
         gc_times_secs = [gc_cumulative_times[0] / 1000.0]
         last_jit_time = jit_cumulative_times[0]
         last_gc_time = gc_cumulative_times[0]
-        for iteration in xrange(1, iterations):
-            jit_times_secs.append((jit_cumulative_times[iteration] - last_jit_time) / 1000.0)
+        for iteration in range(1, iterations):
+            jit_times_secs.append(
+                (jit_cumulative_times[iteration] - last_jit_time) / 1000.0)
             last_jit_time = jit_cumulative_times[iteration]
-            gc_times_secs.append((gc_cumulative_times[iteration] - last_gc_time) / 1000.0)
+            gc_times_secs.append(
+                (gc_cumulative_times[iteration] - last_gc_time) / 1000.0)
             last_gc_time = gc_cumulative_times[iteration]
         assert len(jit_times_secs) == len(jit_cumulative_times)
         assert len(gc_times_secs) == len(gc_cumulative_times)
@@ -150,7 +153,7 @@ class PyPyInstrumentParser(VMInstrumentParser):
             iterations['gc'].append(iteration['gc'])
         iterations['jit'] = self.instr_data['jit_times']
         self.chart_data = (
-            [ChartData('GC', iterations['gc'], 'GC events') ,
+            [ChartData('GC', iterations['gc'], 'GC events'),
              ChartData('JIT', iterations['jit'], 'JIT tracing')])
 
     def _parse_node(self, node, info):
@@ -175,5 +178,5 @@ class PyPyInstrumentParser(VMInstrumentParser):
 # Mapping from VM name -> parser class.
 # This enables the main scripts to parse instrumentation data based only
 # on the vm:bench:language triplets found in Krun data files.
-INSTRUMENTATION_PARSERS = { 'HotSpot': HotSpotInstrumentParser,
-                            'PyPy': PyPyInstrumentParser, }
+INSTRUMENTATION_PARSERS = {'HotSpot': HotSpotInstrumentParser,
+                           'PyPy': PyPyInstrumentParser, }

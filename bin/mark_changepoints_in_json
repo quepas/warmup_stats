@@ -103,7 +103,7 @@ class Segments(object):
                               outliers)
             self.segments.append(segment)
         else:
-            for index in xrange(len(means)):
+            for index in range(len(means)):
                 segment = None
                 if index == 0:
                     s_out = [out for out in outliers if out <= cpts[index]]
@@ -145,7 +145,7 @@ class Segments(object):
         upper_bound = max(last_segment.mean + last_segment.variance,
                           last_segment.mean + self.delta)
         classification = 'flat'
-        for index in xrange(len(self.segments) - 2, -1, -1):
+        for index in range(len(self.segments) - 2, -1, -1):
             current_segment = self.segments[index]
             if (current_segment.mean + current_segment.variance >= lower_bound and
                     current_segment.mean - current_segment.variance <= upper_bound):
@@ -230,7 +230,7 @@ def get_segments(cpt, delta, steady_state, data, outliers):
     # If outliers were deleted, the index of each changepoint will have moved.
     # Here, we adjust the indices to match the original data.
     for outlier in outliers:
-        for index in xrange(len(c_points)):
+        for index in range(len(c_points)):
             if c_points[index] >= outlier:
                 c_points[index] += 1
     # Variances is a list of variances for each data segment between changepoints.
