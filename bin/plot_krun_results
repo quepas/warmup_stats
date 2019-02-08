@@ -833,7 +833,7 @@ def draw_page(is_interactive, executions, cycles_executions,
         y_range_zoom = [(None, None)] * len(executions)
     else:
         for index in range(len(executions)):
-            if window_size > 0:
+            if window_size and window_size > 0:
                 first_n = window_size
             else:
                 first_n = int(len(executions[index]) * ZOOM_PROPORTION)
@@ -1446,8 +1446,8 @@ if __name__ == '__main__':
     # Find the number of in-proc iterations in a non-crashed pexec
     # Assumes we use the same number of in-proc iterations for all pexecs.
     try:
-        for key_data in data['data'].itervalues():
-            for bench_data in key_data.itervalues():
+        for key_data in data['data'].values():
+            for bench_data in key_data.values():
                 for pexec in bench_data:
                     if pexec == []:
                         # indicates a crash
