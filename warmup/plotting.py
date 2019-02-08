@@ -112,8 +112,8 @@ def axis_data_transform(axis, xin, yin, inverse=False):
     xdelta = xlim[1] - xlim[0]
     ydelta = ylim[1] - ylim[0]
     if not inverse:
-        xout =  xlim[0] + xin * xdelta
-        yout =  ylim[0] + yin * ydelta
+        xout = xlim[0] + xin * xdelta
+        yout = ylim[0] + yin * ydelta
     else:
         xdelta2 = xin - xlim[0]
         ydelta2 = yin - ylim[0]
@@ -129,14 +129,15 @@ def axis_to_figure_transform(fig, axis, coord):
     return fig.transFigure.inverted().transform(axis.transAxes.transform(coord))
 
 
-def collide_rect((left, bottom, width, height), fig, axis, data, x_bounds):
+def collide_rect(left, bottom, width, height, fig, axis, data, x_bounds):
     """Determine whether a rectangle (in axis coordinates) collides with
     any data (data coordinates, or seconds). We use the matplotlib transData
     API to convert between display and data coordinates.
     """
     # Find the values on the x-axis of left and right edges of the rect.
     x_left_float, _ = axis_data_transform(axis, left, 0, inverse=False)
-    x_right_float, _ = axis_data_transform(axis, left + width, 0, inverse=False)
+    x_right_float, _ = axis_data_transform(
+        axis, left + width, 0, inverse=False)
     x_left = int(math.floor(x_left_float)) - x_bounds[0]
     x_right = int(math.ceil(x_right_float)) - x_bounds[0]
     # Next find the highest and lowest y-value in that segment of data.
@@ -148,7 +149,7 @@ def collide_rect((left, bottom, width, height), fig, axis, data, x_bounds):
     for datum in data[x_left:x_right]:
         if ((datum >= inset_bottom and datum <= inset_top) or  # Inside rect.
             (bottom > 0.5 and datum >= inset_top) or           # Above rect.
-            (bottom < 0.5 and datum <= inset_bottom)):         # Below rect.
+                (bottom < 0.5 and datum <= inset_bottom)):         # Below rect.
             return True, -1.0
     if bottom > 0.5:  # Inset at top of chart.
         dist = math.fabs(inset_bottom - maximum_y)
@@ -161,7 +162,7 @@ def add_inset_to_axis(fig, axis, rect):
     left, bottom, width, height = rect
     fig_left, fig_bottom = axis_to_figure_transform(fig, axis, (left, bottom))
     fig_width, fig_height = axis_to_figure_transform(fig, axis, [width, height]) \
-                                   - axis_to_figure_transform(fig, axis, [0, 0])
+        - axis_to_figure_transform(fig, axis, [0, 0])
     return fig.add_axes([fig_left, fig_bottom, fig_width, fig_height], frameon=True)
 
 
@@ -172,7 +173,7 @@ def format_yticks_scientific(axis):
     multiplies each ticklabel). Remove the multiplier from the top-left hand
     corner of the plot, and add it to the ticklabel instead.
     """
-    y_min, y_max= axis.get_ylim()
+    y_min, y_max = axis.get_ylim()
     if y_max > 100000 or (y_min < 0.00001 and y_min > 0.0):
         formatter = ScalarFormatter(useMathText=True, useOffset=False)
         formatter.set_scientific(True)
@@ -220,11 +221,11 @@ def add_margin_to_axes(axis, x=0.01, y=0.01):
 def compute_grid_offsets(d_min, d_max, num, with_max=False):
     if with_max:  # x-ticks for wallclock times, must include max value.
         rng = float(d_max) - d_min
-        freq =  rng / num
+        freq = rng / num
         return [d_min + i * round(freq) for i in range(num)] + [d_max - 1]
     else:
         rng = float(d_max) - d_min
-        freq =  rng / num
+        freq = rng / num
         return [d_min + i * freq for i in range(num + 1)]
 
 
