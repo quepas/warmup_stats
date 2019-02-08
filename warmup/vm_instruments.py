@@ -171,7 +171,8 @@ class PyPyInstrumentParser(VMInstrumentParser):
         elif event_type.startswith('jit-'):
             info['jit'] += net_time
         else:
-            print 'WARNING: unknown event in PyPy instrumentation: %s' % event_type
+            print('WARNING: unknown event in PyPy instrumentation: %s' %
+                  event_type)
         return net_time
 
 
