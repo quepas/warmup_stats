@@ -83,7 +83,7 @@ def collect_summary_statistics(data_dictionaries, delta, steady_state):
     # Although the caller can pass >1 json file, there should never be two
     # different machines.
     assert len(data_dictionaries) == 1
-    machine = data_dictionaries.keys()[0]
+    machine = list(data_dictionaries.keys())[0]
     summary_data = { 'machines': { machine: dict() }, 'warmup_format_version': JSON_VERSION_NUMBER }
     # Parse data dictionaries.
     keys = sorted(data_dictionaries[machine]['wallclock_times'].keys())
