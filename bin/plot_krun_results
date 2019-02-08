@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 #
 # Copyright (c) 2017 King's College London
 # created by the Software Development Team <http://soft-dev.org/>
@@ -1350,7 +1350,7 @@ if __name__ == '__main__':
         pyplot.switch_backend('TkAgg')
     else:
         from matplotlib.backends.backend_pdf import PdfPages
-        print 'Saving results to: %s' % options.outfile
+        print('Saving results to: %s' % options.outfile)
     print('Using matplotlib version %s with backend %s' %
             (matplotlib.__version__, matplotlib.get_backend()))
     print('Charting with xlimits: %s' % options.xlimits)

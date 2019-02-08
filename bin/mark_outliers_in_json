@@ -143,5 +143,5 @@ def create_cli_parser():
 if __name__ == '__main__':
     parser = create_cli_parser()
     options = parser.parse_args()
-    print 'Marking outliers with sliding window size: %d' % options.window_size
+    print('Marking outliers with sliding window size: %d' % options.window_size)
     main(options.json_files[0], options.window_size, options.threshold)
