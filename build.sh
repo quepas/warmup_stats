@@ -50,15 +50,15 @@ if [ $? != 0 ]; then
     exit 1
 fi
 
-which python2.7 > /dev/null 2>&1
+which python3 > /dev/null 2>&1
 if [ $? != 0 ]; then
-    echo "python2.7 must be installed" >&2
+    echo "python3 must be installed" >&2
     exit 1
 fi
 
-python2.7 -c "import setuptools" > /dev/null 2>&1
+python3 -c "import setuptools" > /dev/null 2>&1
 if [ $? != 0 ]; then
-    echo "setuptools for python2.7 must be installed" >&2
+    echo "setuptools for python3 must be installed" >&2
     exit 1
 fi
 
@@ -87,10 +87,10 @@ echo "devtools::install_git('git://github.com/rkillick/changepoint', branch = 'm
 which lsb_release > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     if [ "$(lsb_release -si)" = "Ubuntu" ]; then
-        pip install --target "${PIP_TARGET_DIR}" "rpy2==2.8.5" || exit $?
+        pip install --target "${PIP_TARGET_DIR}" "rpy2" || exit $?
     else
-        pip install --system --target "${PIP_TARGET_DIR}" "rpy2==2.8.5" || exit $?
+        pip install --system --target "${PIP_TARGET_DIR}" "rpy2" || exit $?
     fi
 else
-    pip install --system --target "${PIP_TARGET_DIR}" "rpy2==2.8.5" || exit $?
+    pip install --system --target "${PIP_TARGET_DIR}" "rpy2" || exit $?
 fi
