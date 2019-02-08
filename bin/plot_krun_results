@@ -704,14 +704,14 @@ class ProcessExecChart(object):
         # include in fig.add_axes.
         inset_collides = False
         left_offsets = [x / 10.0 for x in range(6)] * 2
-        bottom_values = (([1.0 - INSET_DEFAULT_HEIGHT - INSET_PADDING - INSET_TICK_SPACE] * (len(left_offsets) / 2))
-                         + ([INSET_PADDING * 2 + INSET_TICK_SPACE] * (len(left_offsets) / 2)))
+        bottom_values = (([1.0 - INSET_DEFAULT_HEIGHT - INSET_PADDING - INSET_TICK_SPACE] * (len(left_offsets) // 2))
+                         + ([INSET_PADDING * 2 + INSET_TICK_SPACE] * (len(left_offsets) // 2)))
         best_distance = -1.0
         best_rect = None
         for left_offset, bottom in zip(left_offsets, bottom_values):
             rect = [1.0 - left_offset - INSET_DEFAULT_WIDTH - INSET_PADDING - INSET_TICK_SPACE,
                     bottom, INSET_DEFAULT_WIDTH + INSET_TICK_SPACE, INSET_DEFAULT_HEIGHT + INSET_TICK_SPACE]
-            inset_collides, dist = collide_rect(rect, fig, axis, self.wallclock_data, self.x_bounds)
+            inset_collides, dist = collide_rect(rect[0], rect[1], rect[2], rect[3], fig, axis, self.wallclock_data, self.x_bounds)
             if not inset_collides:
                 if not best_rect or round(dist - best_distance) >= INSET_DIST_DELTA:
                     best_distance = dist
