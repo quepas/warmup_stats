@@ -143,21 +143,21 @@ def legend():
     return '\\textbf{Diff against previous results:} ' + table
 
 
-def do_intervals_differ((x1, y1), (x2, y2)):
+def do_intervals_differ(p1, p2):
     """Given two IQRs or CIs return True if they do NOT overlap."""
 
-    assert y1 >= x1 and y2 >= x2
-    return y1 < x2 or y2 < x1
+    assert p1[1] >= p1[0] and p2[1] >= p2[0]
+    return p1[1] < p2[0] or p2[1] < p1[0]
 
 
-def does_interval_narrow((x1, y1), (x2, y2)):
+def does_interval_narrow(p1, p2):
     """Return True if the second interval is narrower than the first."""
 
-    assert y1 >= x1 and y2 >= x2
+    assert p1[1] >= p1[0] and p2[1] >= p2[0]
     # Sometimes there is no variation in a dataset (more likely for steady iter
     # than steady perf, for obvious reasons). So, we check for special cases,
     # rather than causing a divide by zero.
-    diff1, diff2 = y1 - x1, y2 - x2
+    diff1, diff2 = p1[1] - p1[0], p2[1] - p2[0]
     if diff1 == 0 and diff2 == 0:
         return SAME
     if diff1 == 0 and diff2 > 0:
@@ -246,8 +246,8 @@ def diff(before_file, after_file, summary_filename, diff_vms=[]):
     classifiers[AFTER], after_results = parse_krun_file_with_changepoints([after_file])
     assert len(before_results.keys()) == 1, 'Expected one machine per results file.'
     assert len(after_results.keys()) == 1, 'Expected one machine per results file.'
-    assert before_results.keys()[0] == after_results.keys()[0], 'Expected results to be from same machine.'
-    machine = before_results.keys()[0]
+    assert list(before_results.keys())[0] == list(after_results.keys())[0], 'Expected results to be from same machine.'
+    machine = list(before_results.keys())[0]
     # Special case: the user wants to diff one VM against another (by default,
     # we diff each VM against itself, for every VM that appears in both the
     # before and after data). If the user wants to diff one VM against another,
