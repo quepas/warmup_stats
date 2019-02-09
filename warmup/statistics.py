@@ -60,10 +60,10 @@ def bootstrap_runner(marshalled_data):
     try:
         pipe = subprocess.Popen(['pypy', BOOTSTRAPPER], stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE)
-        pipe.stdin.write(marshalled_data + '\n')
+        pipe.stdin.write((marshalled_data + '\n').encode('utf-8'))
         pipe.stdin.flush()
         output = pipe.stdout.readline().strip()
-        mean_str, ci_str = output.split(',')
+        mean_str, ci_str = output.decode().split(',')
         mean, ci = float(mean_str), float(ci_str)
         return mean, ci
     except:
