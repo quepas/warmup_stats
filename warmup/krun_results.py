@@ -77,7 +77,7 @@ def csv_to_krun_json(in_files, language, vm, uname):
         # We do this so we can easily check for gaps (missing pexecs).
         with open(filename, 'r') as fd:
             reader = csv.reader(fd)
-            header = reader.next()  # Skip header row.
+            header = next(reader)  # Skip header row.
             rows = iter(reader)
             sorted_rows = sorted(rows, key=lambda l: (l[1], int(l[0])))
 

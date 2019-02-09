@@ -212,9 +212,9 @@ def check_environment(need_outliers=True, need_changepoints=True, need_latex=Tru
     pypy_path = None
     pdflatex_path = None
     r_path = None
-    python_path = find_executable('python2.7')
+    python_path = find_executable('python3')
     if python_path is None:
-        fatal('warmup scripts require Python 2.7, and are not likely to work with Python 3.x.')
+        fatal('warmup scripts require Python 3')
     if find_executable('bzip2') is None or find_executable('bunzip2') is None:
         fatal('Please install bzip2 and bunzip2 to convert CSV files to Krun JSON format.')
     if need_outliers:
@@ -323,7 +323,7 @@ class BenchmarkFile(object):
             fatal('CSV file has malformed header. Run this script with --help for more details.')
 
     def _get_output_filename(self, output):
-        for line in output.strip().split('\n'):
+        for line in output.strip().decode().split('\n'):
             if line.startswith('Writing out:'):
                 return line.split(' ')[-1]
         assert False
