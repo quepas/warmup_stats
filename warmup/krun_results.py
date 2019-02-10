@@ -163,7 +163,10 @@ def parse_krun_file_with_changepoints(json_files):
         assert os.path.exists(filename), 'File %s does not exist.' % filename
         data = read_krun_results_file(filename)
         assert 'classifications' in data, 'Please run mark_changepoints_in_json before re-running this script.'
-        machine_name = data['audit']['uname'].split(' ')[1]
+        if ' ' in data['audit']['uname']:
+            machine_name = data['audit']['uname'].split(' ')[1]
+        else:
+            machine_name = data['audit']['uname']
         if '.' in machine_name:  # Remove domain, if there is one.
             machine_name = machine_name.split('.')[0]
         if machine_name not in data_dictionary:
