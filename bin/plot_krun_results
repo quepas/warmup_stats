@@ -1026,7 +1026,10 @@ def get_data_dictionaries(json_files, benchmarks=[], wallclock_only=False,
             data_dictionary['classifier'] = data['classifier']
 
         # Get machine name from Krun results file.
-        machine = data['audit']['uname'].split(' ')[1]
+        if ' ' in data['audit']['uname']:
+            machine = data['audit']['uname'].split(' ')[1]
+        else:
+            machine = data['audit']['uname']
         if '.' in machine:  # Strip domain names.
             machine = machine.split('.')[0]
         machine_name = pretty_print_machine(machine)
